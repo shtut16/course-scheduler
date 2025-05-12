@@ -1,6 +1,6 @@
 # Fordham CS Department Course Scheduler
 
-This is an in-progress full-stack web application built using **React** for the frontend 
+This is a full-stack web application built using **React** for the frontend 
 and **Django** for the backend. It allows users to create, share, and manage calendar events 
 collaboratively with features like user authentication, an admin dashboard, and conflict resolution (work in progress).
 
@@ -89,6 +89,9 @@ If not, create one.
 
 In the `scheduler_backend` (settings.py), make sure CORS settings allow your frontend origin (http://localhost:3000).
 
+### 5. Run Webapp
+While the backend and frontend is running, you can visit http://localhost:3000/ to use the Course Scheduler.
+
 ### Notes
 1. Make sure Python, Node.js, Django are installed on your system.
 
@@ -101,6 +104,9 @@ In the `scheduler_backend` (settings.py), make sure CORS settings allow your fro
 username: admin
 <br>
 password: test
+
+## Author
+- **Shein Htut Tun Lwin**
 
 
 
