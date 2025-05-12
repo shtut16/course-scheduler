@@ -1,3 +1,7 @@
+// Requests.js
+// Displays a list of course scheduling requests.
+// Allows users to view current and resolved requests, and shows request details in a modal on row click.
+
 import React, { useState } from "react";
 import MiniNavBar from "./helper/MiniNavBar";
 
@@ -55,7 +59,6 @@ const Requests = () => {
         </div>
 
         <div style={{ width: "100%" }}>
-          {/* Total Requests Button aligned to the left */}
           <div style={styles.requestHeader}>
             <button style={styles.totalRequestsButton}>
               Total Requests: {requestsData.length}

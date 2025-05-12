@@ -1,3 +1,8 @@
+// Signup.js
+// Handles user signup functionality, collects username, email,and password, and sends them to the API for
+// account creation. Displays any error messages if signup fails. Upon successful signup,
+// the user is redirected to the login page.
+
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -6,12 +11,16 @@ import { Tooltip } from 'react-tooltip';
 
 const apiUrl = process.env.REACT_APP_API_URL;
 const Signup = () => {
+    // State variables for storing form data and error messages
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+
+    // navigate hook for redirecting after successful signup
     const navigate = useNavigate();
 
+    // handleSubmit function that handles form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
@@ -23,10 +32,13 @@ const Signup = () => {
                 password,
             });
 
+            // If signup is successful, redirect to login page
             if (response.status === 201) {
                 alert('Signup successful! Please log in.');
                 navigate('/login');
             }
+
+        // If signup fails, display an error message
         } catch (error) {
             setError('Signup failed. Please try again.');
         }

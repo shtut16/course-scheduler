@@ -1,3 +1,9 @@
+// Conflicts.js
+// This component handles displaying and managing conflicts, including time conflicts,
+// exceeded time blocks, and course amount conflicts.
+// It fetches the data from the backend and displays it in tables, allowing the user
+// to click on a row to view more details in a modal.
+
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "./helper/axiosInstance"; // replace the import
@@ -51,10 +57,6 @@ const Conflicts = () => {
     return <div>Loading...</div>; // Show loading message
   }
 
-  // if (error) {
-    // return <div>{error}</div>; // Show error message
-  // }
-
   return (
     <div style={styles.container}>
       {/* Header */}
@@ -64,7 +66,7 @@ const Conflicts = () => {
 
       {/* Navigation Bar */}
       <div>
-        <MiniNavBar /> {/* Use the MiniNavbar here */}
+        <MiniNavBar />
       </div>
 
       <div style={styles.mainContent}>
@@ -72,7 +74,7 @@ const Conflicts = () => {
           <button
             style={{
               ...styles.sidebarButton,
-              backgroundColor: hoveredSidebarButton === "create" ? "#ADD8E6" : "#eee", // Hover effect for "Create New Calendar"
+              backgroundColor: hoveredSidebarButton === "create" ? "#ADD8E6" : "#eee",
               color: hoveredSidebarButton === "create" ? "white" : "black",
             }}
             onMouseEnter={() => setHoveredSidebarButton("create")}
@@ -83,7 +85,7 @@ const Conflicts = () => {
           <button
             style={{
               ...styles.sidebarButton,
-              backgroundColor: hoveredSidebarButton === "import" ? "#ADD8E6" : "#eee", // Hover effect for "Import"
+              backgroundColor: hoveredSidebarButton === "import" ? "#ADD8E6" : "#eee",
               color: hoveredSidebarButton === "import" ? "white" : "black",
             }}
             onMouseEnter={() => setHoveredSidebarButton("import")}
@@ -198,7 +200,7 @@ const styles = {
     marginBottom: "20px",
     display: "flex",
     alignItems: "center",
-    justifyContent: "flex-start", // Align left
+    justifyContent: "flex-start",
     width: "100%",
   },
   totalConflictsButton: {

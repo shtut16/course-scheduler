@@ -1,10 +1,15 @@
+// Calendar.js
+// Renders a weekly calendar view using FullCalendar, displaying events fetched from an API.
+// Events are normalized before rendering. Clicking an event opens a modal with detailed info, and users can
+// delete events. Supports both user-specific and shared calendars, based on the `calendarType` prop.
+
 import React, { useState } from 'react';
 import FullCalendar from '@fullcalendar/react';
-import timeGridPlugin from '@fullcalendar/timegrid'; // Plugin for time grid (week view)
-import dayGridPlugin from '@fullcalendar/daygrid'; // Plugin for time grid (week view)
-import interactionPlugin from '@fullcalendar/interaction'; // Plugin for time grid (week view)
-import Modal from 'react-modal'; // To create a modal for event details
-import axios from "./helper/axiosInstance"; // replace the import
+import timeGridPlugin from '@fullcalendar/timegrid';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import interactionPlugin from '@fullcalendar/interaction';
+import Modal from 'react-modal';
+import axios from "./helper/axiosInstance";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -17,8 +22,6 @@ const Calendar = ({ events = [], calendarType, onEventDeleted }) => {
     setSelectedEvent(info.event); // Store the event that was clicked
     setModalIsOpen(true); // Open the modal
   };
-
-  // const referenceWeekStart = new Date("2025-01-06T00:00:00"); // Monday
 
   const normalizeEvent = (event) => {
     console.log('Raw event:', event);
@@ -52,9 +55,10 @@ const Calendar = ({ events = [], calendarType, onEventDeleted }) => {
     };
   };
 
+  // Normalize all events for FullCalendar
   const normalizedEvents = events.map(normalizeEvent);
 
-  // Map of user to color
+  // Map of user to color for event display
   const userColorMapping = {
     'user1': '#FF5733', // Example color for user1
     'user2': '#33FF57', // Example color for user2
@@ -106,8 +110,8 @@ const Calendar = ({ events = [], calendarType, onEventDeleted }) => {
         isOpen={modalIsOpen}
         onRequestClose={() => setModalIsOpen(false)}
         contentLabel="Event Details"
-        className="modal"  // Use custom modal class for styling
-        overlayClassName="modal-overlay"  // Use custom overlay class for styling
+        className="modal"
+        overlayClassName="modal-overlay"
       >
         {selectedEvent && (
           <div className="modal-content">
@@ -131,7 +135,7 @@ const Calendar = ({ events = [], calendarType, onEventDeleted }) => {
                   setModalIsOpen(false);
                   setSelectedEvent(null);
                   if (typeof onEventDeleted === "function") {
-                    onEventDeleted(); // 🔁 Trigger refresh from parent
+                    onEventDeleted(); // Trigger refresh from parent
                   }
                 } catch (error) {
                   console.error("Failed to delete event:", error);

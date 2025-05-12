@@ -1,23 +1,37 @@
+// Login.js
+// This component handles the user login functionality.
+// It takes the user's username and password as inputs, attempts to authenticate the user via an API request,
+// and stores the received tokens in localStorage if successful.
+
 import React, { useState } from "react";
 import axios from 'axios';
 import '../styles/Login.css';
 import { Tooltip } from 'react-tooltip';
 
 function Login() {
+  // State hooks for managing the username, password, and error messages
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+
+   // API URL from environment variables
   const apiUrl = process.env.REACT_APP_API_URL;
 
+  // handleLogin function to authenticate the user
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
+      // Sending a POST request to the API for authentication
       const response = await axios.post(`${apiUrl}/api/login/`, {
         username,
         password,
       });
+
+      // Storing the access and refresh tokens in localStorage
       localStorage.setItem('access_token', response.data.tokens.access);
       localStorage.setItem('refresh_token', response.data.tokens.refresh);
+
+      // Redirecting the user to the dashboard upon successful login
       window.location.href = '/dashboard';
     } catch (error) {
       setErrorMessage('Invalid username or password');

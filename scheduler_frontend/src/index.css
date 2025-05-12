@@ -23,7 +23,7 @@ code {
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 1000;  /* Ensure modal is on top of other content */
+  z-index: 1000;
 }
 
 /* Modal Content */
@@ -72,7 +72,7 @@ code {
 }
 
 .delete-btn:hover {
-  background-color: #e57373; /* Slightly darker red on hover */
+  background-color: #e57373;
 }
 
 /* Animation for modal appearance */
@@ -104,18 +104,18 @@ code {
 
 /* Event Form Styling */
 .event-form {
-  position: fixed; /* Fix position on the screen */
-  top: 10%; /* Adjust this value to make it higher or lower */
-  left: 20px; /* Add spacing from the left edge */
+  position: fixed;
+  top: 10%;
+  left: 20px;
   padding: 1rem;
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  width: 300px; /* Set width */
+  width: 300px;
   height: auto;
-  max-height: 80vh; /* Limit max height */
-  overflow-y: auto; /* Make it scrollable if content exceeds the height */
-  z-index: 1000; /* Ensure it sits on top */
+  max-height: 80vh;
+  overflow-y: auto;
+  z-index: 1000;
 }
 
 /* Close button styling */
@@ -205,16 +205,13 @@ code {
   background-color: #3367d6;
 }
 
-
-
 /* RECENT CHANGES TABLE */
-/* Styling for Recent Changes Section */
 .recent-changes-container {
-  padding: 0; /* Reduced padding to remove top space */
+  padding: 0;
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin-top: -20px; /* Moved the box higher by using negative margin */
+  margin-top: -20px;
 }
 
 .recent-changes-container h2 {
@@ -283,9 +280,6 @@ code {
 }
 
 /* Export Modal */
-/* index.css */
-
-/* Container for the export modal */
 .export-options-container {
   position: fixed;
   top: 50%;
@@ -355,7 +349,7 @@ code {
   top: 10px;
   right: 10px;
   transition: background-color 0.3s ease;
-  padding: 0; /* Remove any padding to ensure the circle stays perfect */
+  padding: 0;
 }
 
 /* Close button hover effect */
@@ -363,12 +357,11 @@ code {
   background-color: #e53935;
 }
 
-/* Remove any border or outline from the button when focused */
 .close-button:focus {
   outline: none;
 }
 
-/* Style for the backdrop (overlay behind modal) */
+/* Style for the modal backdrop */
 .modal-backdrop {
   position: fixed;
   top: 0;

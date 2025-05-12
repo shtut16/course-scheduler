@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+# Model representing a course.
 class Event(models.Model):
     course_number = models.CharField(max_length=20)
     course_title = models.CharField(max_length=200)
@@ -14,6 +15,7 @@ class Event(models.Model):
     def __str__(self):
         return f"{self.course_number} - {self.course_title}"
 
+# Model to log changes made to events for recent changes.
 class ChangeLog(models.Model):
     ACTION_CHOICES = [
         ('created', 'Created'),

@@ -1,14 +1,21 @@
+// SharedCalendar.js
+// Displays a shared calendar, allows viewing recent changes,
+// and provides options to export the calendar in different formats (e.g., PDF, 105.xlsx).
+// The component uses state to manage the visibility of various sections like recent changes and export options.
+
 import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "./helper/axiosInstance"; // replace the import
+import axios from "./helper/axiosInstance";
 import Calendar from "../components/Calendar";
 import MiniNavBar from "./helper/MiniNavBar";
 import RecentChanges from './helper/RecentChanges';
 import ExportCalendar from './helper/ExportCalendar';
-import {Tooltip} from "react-tooltip";  // Import ExportCalendar component
+import {Tooltip} from "react-tooltip";
 
-const apiUrl = process.env.REACT_APP_API_URL;
+const apiUrl = process.env.REACT_APP_API_URL;  // API URL from environment variable
+
 const SharedCalendar = () => {
+  // State to manage hovered button, calendar data, and visibility of various sections
   const [hoveredButton, setHoveredButton] = useState(null);
   const [calendarData, setCalendarData] = useState(null);
   const [showRecentChanges, setShowRecentChanges] = useState(false);
@@ -41,8 +48,8 @@ const SharedCalendar = () => {
   const handleExportClick = (format) => {
     if (format === "pdf") {
       setShouldExport(true);
-    } else if (format === "105.xlx") {
-      console.log("Export to 105.xlx is not yet implemented.");
+    } else if (format === "105.xlsx") {
+      console.log("Export to 105.xlsx is not yet implemented.");
     }
     setShowExportOptions(false);
   };
@@ -94,7 +101,7 @@ const SharedCalendar = () => {
           {/* Toggleable Recent Changes Section */}
           {showRecentChanges && (
               <div style={styles.recentChangesContainer}>
-                <RecentChanges/> {/* This will display your RecentChanges component */}
+                <RecentChanges/>
               </div>
           )}
 
@@ -106,7 +113,7 @@ const SharedCalendar = () => {
                 <div className="export-options-container">
                   <h3>Export Calendar</h3>
                   <button onClick={() => handleExportClick("pdf")}>Export as PDF</button>
-                  <button onClick={() => handleExportClick("105.xlx")}>Export as 105.xlx</button>
+                  <button onClick={() => handleExportClick("105.xlsx")}>Export as 105.xlsx</button>
                   <button className="close-button" onClick={handleCloseExportOptions}>X</button>
                 </div>
               </>
@@ -143,7 +150,7 @@ const SharedCalendar = () => {
                 <Calendar
                     events={calendarData || []}
                     calendarType="shared"
-                    onEventDeleted={fetchSharedEvents} // 🔁 Refresh after delete
+                    onEventDeleted={fetchSharedEvents}  // Refresh after delete
                 />
               </div>
             </div>
@@ -168,7 +175,7 @@ const SharedCalendar = () => {
             <ExportCalendar
                 events={calendarData || []}
                 format={exportFormat}
-                onDone={() => setExportFormat(null)} // Reset after export
+                onDone={() => setExportFormat(null)}  // Reset after export
             />
         )}
 

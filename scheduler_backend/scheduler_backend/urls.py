@@ -19,13 +19,13 @@ from django.contrib import admin
 from django.urls import path, include
 from django.http import HttpResponse
 
-def home(request):  # BASIC RESPONSE: REMOVE LATER
-    return HttpResponse("Welcome to the course scheduler app!")
+def home(request):  # basic response
+    return HttpResponse("Server is running.")
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/", include('users.urls')),
-    path('', home),  # This serves a basic response at the root URL REMOVE LATER
+    path('', home),  # Root URL that gives the basic response to check server runs properly
 ]
 
 

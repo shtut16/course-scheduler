@@ -1,3 +1,7 @@
+// MiniNavBar.js
+// A navigation bar component for quickly accessing different parts of the application.
+// It uses React Router's Link component to navigate between routes.
+
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 

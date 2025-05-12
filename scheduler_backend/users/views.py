@@ -1,37 +1,26 @@
-from django.shortcuts import render
+from rest_framework import status, permissions, viewsets
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
-from django.http import JsonResponse
 from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import AllowAny
+from django.http import JsonResponse
 from django.contrib.auth.models import User
-from rest_framework import status, permissions, viewsets
-from django.contrib.auth import get_user_model
 from .models import Event, ChangeLog
 from .serializers import EventSerializer
-from rest_framework.permissions import AllowAny
-from copy import deepcopy
-from rest_framework import status
 
-# Create your views here.
-
+# Root API home
 def api_home(request):
-    return JsonResponse({"message": "Welcome to the API!"})  # REMOVE LATER
+    return JsonResponse({"message": "Welcome to the API"})
 
-# Login view
+# Custom JWT login view with success message
 class CustomTokenObtainPairView(TokenObtainPairView):
     def post(self, request, *args, **kwargs):
         response = super().post(request, *args, **kwargs)
         return Response({"message": "Login successful", "tokens": response.data})
 
-'''# Protected view (Example)
-class DashboardView(APIView):
-    permission_classes = [IsAuthenticated]
-
-    def get(self, request):
-        return Response({"message": f"Welcome, {request.user.username}!"})'''
-
+# Authenticated dashboard view showing user role info
 class DashboardView(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -43,8 +32,9 @@ class DashboardView(APIView):
             "is_superuser": user.is_superuser,
         })
 
+# Public user signup view
 @api_view(['POST'])
-@permission_classes([AllowAny])  # ← This is the key!
+@permission_classes([AllowAny])
 def signup(request):
     username = request.data.get('username')
     password = request.data.get('password')
@@ -58,6 +48,7 @@ def signup(request):
     user = User.objects.create_user(username=username, password=password)
     return Response({'message': 'User created successfully'}, status=status.HTTP_201_CREATED)
 
+# Create new event for authenticated user
 class EventCreateView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
@@ -75,7 +66,7 @@ class EventCreateView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
+# Viewset for retrieving/updating user's personal (non-shared) events
 class MyCalendarView(viewsets.ModelViewSet):
     serializer_class = EventSerializer
     permission_classes = [IsAuthenticated]
@@ -83,6 +74,7 @@ class MyCalendarView(viewsets.ModelViewSet):
     def get_queryset(self):
         return Event.objects.filter(user=self.request.user, is_shared=False)
 
+# Viewset for retrieving/updating shared events
 class SharedCalendarView(viewsets.ModelViewSet):
     serializer_class = EventSerializer
     permission_classes = [IsAuthenticated]
@@ -90,18 +82,7 @@ class SharedCalendarView(viewsets.ModelViewSet):
     def get_queryset(self):
         return Event.objects.filter(is_shared=True)
 
-'''@api_view(['DELETE'])
-@permission_classes([IsAuthenticated])
-def event_detail(request, id):
-    try:
-        event = Event.objects.get(id=id, user=request.user)
-    except Event.DoesNotExist:
-        return Response({"detail": "Event not found."}, status=status.HTTP_404_NOT_FOUND)
-
-    if request.method == 'DELETE':
-        event.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)'''
-
+# Delete a specific event and log the deletion
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
 def event_detail(request, id):
@@ -119,11 +100,12 @@ def event_detail(request, id):
             notes=f"Deleted event '{event.course_title}' from the calendar"
         )
 
-        # Now delete the event
+        # Delete the event
         event.delete()
 
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+# Push all of the user's events to the shared calendar and log the actions
 class PushCalendarToSharedView(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -152,6 +134,7 @@ class PushCalendarToSharedView(APIView):
             "events": events_with_user_data
         }, status=200)
 
+# Returns the most recent push/delete actions from the changelog
 @api_view(['GET'])
 def recent_changes(request):
     try:

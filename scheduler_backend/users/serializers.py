@@ -1,8 +1,9 @@
 from rest_framework import serializers
 from .models import Event
 
+# Serializer to convert Event model instances to/from JSON
 class EventSerializer(serializers.ModelSerializer):
-    user = serializers.StringRelatedField()  # Or `serializers.PrimaryKeyRelatedField` if you want the user ID
+    user = serializers.StringRelatedField()
 
     class Meta:
         model = Event

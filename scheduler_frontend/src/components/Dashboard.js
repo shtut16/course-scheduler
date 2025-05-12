@@ -1,3 +1,9 @@
+// Dashboard.js
+// This component is responsible for rendering the dashboard UI.
+// It fetches user-specific data from the backend API, such as the user's schedule, shared calendars,
+// and additional management options for admin users. Based on the fetched data, it
+// conditionally renders the dashboard content.
+
 import React, { useEffect, useState } from 'react';
 import axios from "./helper/axiosInstance";
 import { Link } from "react-router-dom";

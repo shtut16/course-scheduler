@@ -1,12 +1,16 @@
+// RecentChanges.js
+// This component fetches and displays a list of recent changes made by users.
+// It makes an API request to the server to retrieve the changes, which are displayed in a table format.
+
 import React, { useEffect, useState } from 'react';
-import axios from 'axios'; // Use the default Axios import
+import axios from 'axios';
 
 const apiUrl = process.env.REACT_APP_API_URL;
 const RecentChanges = () => {
   const [changes, setChanges] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [visibleCount, setVisibleCount] = useState(5); // Limit to 5 initially
+  const [visibleCount, setVisibleCount] = useState(5); // Limit to 5
 
   useEffect(() => {
     const token = localStorage.getItem('access_token'); // Retrieve the JWT token from localStorage

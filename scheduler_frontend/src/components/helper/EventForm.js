@@ -1,3 +1,7 @@
+// EventForm.js
+// A form component for creating a new course event, including fields for title, instructor,
+// days, times, and description.
+
 import React, { useState } from 'react';
 
 const daysOptions = [

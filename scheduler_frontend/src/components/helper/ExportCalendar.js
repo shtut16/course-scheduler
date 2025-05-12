@@ -1,3 +1,8 @@
+// ExportCalendar.js
+// A component that handles the export of the calendar content in PDF format.
+// It uses html2canvas to capture the calendar as an image and jsPDF to generate the PDF file.
+// The component listens for the `format` prop and triggers the export process when it's set to "pdf".
+
 import { useEffect, useRef } from "react";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";

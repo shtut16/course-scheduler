@@ -1,3 +1,8 @@
+// ExportButton.js
+// A component that provides an "Export" button for exporting the calendar data in different
+// formats (PDF or 105.xlsx).
+// The component displays options for exporting once the user clicks the "Export" button.
+
 import React, { useState } from "react";
 import ExportCalendar from './ExportCalendar';  // Import the ExportCalendar component for PDF export
 
@@ -8,9 +13,9 @@ const ExportButton = ({ calendarData }) => {
     if (format === "pdf") {
       // Call the ExportCalendar component to generate PDF
       ExportCalendar({ events: calendarData, format: "pdf" });
-    } else if (format === "105.xlx") {
-      // Placeholder for the 105.xlx export functionality
-      console.log("Export to 105.xlx is not yet implemented.");
+    } else if (format === "105.xlsx") {
+      // Placeholder for the 105.xlsx export functionality
+      console.log("Export to 105.xlsx is not yet implemented.");
     }
     setShowExportOptions(false); // Hide export options after selection
   };
@@ -29,7 +34,7 @@ const ExportButton = ({ calendarData }) => {
         <div style={styles.exportOptionsContainer}>
           <h3>Export Calendar</h3>
           <button onClick={() => handleExportClick("pdf")} style={styles.optionButton}>Export as PDF</button>
-          <button onClick={() => handleExportClick("105.xlx")} style={styles.optionButton}>Export as 105.xlx</button>
+          <button onClick={() => handleExportClick("105.xlsx")} style={styles.optionButton}>Export as 105.xlsx</button>
         </div>
       )}
     </div>

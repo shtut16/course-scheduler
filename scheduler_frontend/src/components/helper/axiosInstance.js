@@ -1,4 +1,5 @@
-// Automatically logs out after session ends
+// axiosInstance.js
+// Automatically logs out the user and redirects to login if a 401 Unauthorized error is received.
 
 import axios from "axios";
 

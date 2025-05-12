@@ -39,11 +39,10 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    # "crispy_forms",  # For nice looking forms
     "rest_framework",  # REST Framework for building APIs
     "rest_framework_simplejwt",  # For token-based authentication
     "users",  # users app
-    "corsheaders",  # allows certain origins to access backend ??
+    "corsheaders",
 ]
 
 MIDDLEWARE = [
@@ -129,8 +128,6 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# CRISPY_TEMPLATE_PACK = "bootstrap4"
-
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",  # Enables token-based authentication.
@@ -141,14 +138,15 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),  # Customizes how long tokens are valid.
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),  # Allows users to get new tokens without logging in again.
-    "ROTATE_REFRESH_TOKENS": True,
-    "BLACKLIST_AFTER_ROTATION": True,
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),  # Sets access token to expire after 30 minutes
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),  # Sets refresh token to expire after 1 day
+    "ROTATE_REFRESH_TOKENS": True,  # Issues a new refresh token each time one is used
+    "BLACKLIST_AFTER_ROTATION": True,  # Blacklists old refresh tokens after rotation
 }
 
+# Adds CORS middleware at the top of the stack to handle cross-origin requests
 MIDDLEWARE.insert(0, 'corsheaders.middleware.CorsMiddleware')
 CORS_ALLOWED_ORIGINS = [
-    "http://34.122.31.155",
-    "http://localhost:3000",
+    "http://34.122.31.155",  # Production frontend
+    "http://localhost:3000",  # Local development frontend
 ]

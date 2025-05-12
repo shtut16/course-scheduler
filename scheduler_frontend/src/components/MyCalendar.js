@@ -1,6 +1,9 @@
+// MyCalendar.js
+// Manages the user-specific calendar, event creation, pushing events to a shared calendar,
+// and exporting calendar data.
+
 import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-// import axios from "axios";
 import axios from "./helper/axiosInstance"; // replace the import
 import Calendar from "../components/Calendar"; // Import the Calendar component
 import MiniNavBar from "./helper/MiniNavBar";
@@ -8,8 +11,11 @@ import EventForm from './helper/EventForm'; // EVENTFORM
 import ExportCalendar from './helper/ExportCalendar';  // Import ExportCalendar component
 import { Tooltip } from 'react-tooltip';
 
+// Store the API URL for the backend
 const apiUrl = process.env.REACT_APP_API_URL;
+
 const MyCalendar = () => {
+  // State management hooks
   const [hoveredButton, setHoveredButton] = useState(null);
   const [calendarData, setCalendarData] = useState(null); // Store user-specific calendar data
   const navigate = useNavigate();
@@ -30,15 +36,15 @@ const MyCalendar = () => {
             Authorization: `Bearer ${token}`,
           },
         });
-        setCalendarData(response.data);
+        setCalendarData(response.data);  // Store the fetched calendar data
       } catch (error) {
         console.error("Error fetching calendar data", error);
       }
-    }, [token]); // token is a dependency
+    }, [token]); // Token as a dependency to re-fetch when token changes
 
     useEffect(() => {
       if (!token) {
-        navigate("/login");
+        navigate("/login");  // Redirect to login if no token is found
         return;
       }
 
@@ -110,8 +116,8 @@ const MyCalendar = () => {
   const handleExportClick = (format) => {
     if (format === "pdf") {
       setShouldExport(true);
-    } else if (format === "105.xlx") {
-      console.log("Export to 105.xlx is not yet implemented.");
+    } else if (format === "105.xlsx") {
+      console.log("Export to 105.xlsx is not yet implemented.");
     }
     setShowExportOptions(false);
   };
@@ -137,7 +143,7 @@ const MyCalendar = () => {
           <button
               style={{
                 ...styles.sidebarButton,
-                backgroundColor: hoveredButton === "viewPast" ? "#ADD8E6" : "#eee", // Light blue on hover
+                backgroundColor: hoveredButton === "viewPast" ? "#ADD8E6" : "#eee",
                 color: hoveredButton === "viewPast" ? "white" : "black",
               }}
               onMouseEnter={() => setHoveredButton("viewPast")}
@@ -149,7 +155,7 @@ const MyCalendar = () => {
           <button onClick={() => setShowEventForm(!showEventForm)}
           style={{
             ...styles.sidebarButton,
-            backgroundColor: hoveredButton === "createEvent" ? "#ADD8E6" : "#eee", // Light blue on hover
+            backgroundColor: hoveredButton === "createEvent" ? "#ADD8E6" : "#eee",
             color: hoveredButton === "createEvent" ? "white" : "black",
           }}
           onMouseEnter={() => setHoveredButton("createEvent")}
@@ -173,7 +179,7 @@ const MyCalendar = () => {
           <button
               style={{
                 ...styles.sidebarButton,
-                backgroundColor: hoveredButton === "recentChanges" ? "#ADD8E6" : "#eee", // Light blue on hover
+                backgroundColor: hoveredButton === "recentChanges" ? "#ADD8E6" : "#eee",
                 color: hoveredButton === "recentChanges" ? "white" : "black",
               }}
               onMouseEnter={() => setHoveredButton("recentChanges")}
@@ -184,7 +190,7 @@ const MyCalendar = () => {
           <button
               style={{
                 ...styles.sidebarButton,
-                backgroundColor: hoveredButton === "export" ? "#ADD8E6" : "#eee", // Light blue on hover
+                backgroundColor: hoveredButton === "export" ? "#ADD8E6" : "#eee",
                 color: hoveredButton === "export" ? "white" : "black",
               }}
               onMouseEnter={() => setHoveredButton("export")}
@@ -206,7 +212,7 @@ const MyCalendar = () => {
                 <div className="export-options-container">
                   <h3>Export Calendar</h3>
                   <button onClick={() => handleExportClick("pdf")}>Export as PDF</button>
-                  <button onClick={() => handleExportClick("105.xlx")}>Export as 105.xlx</button>
+                  <button onClick={() => handleExportClick("105.xlsx")}>Export as 105.xlsx</button>
                   <button className="close-button" onClick={handleCloseExportOptions}>X</button>
                 </div>
               </>
@@ -218,7 +224,7 @@ const MyCalendar = () => {
             <button
                 style={{
                   ...styles.button,
-                  backgroundColor: hoveredButton === "showComments" ? "#ADD8E6" : "white", // Light blue on hover
+                  backgroundColor: hoveredButton === "showComments" ? "#ADD8E6" : "white",
                   color: hoveredButton === "showComments" ? "white" : "black",
                 }}
                 onMouseEnter={() => setHoveredButton("showComments")}
@@ -229,7 +235,7 @@ const MyCalendar = () => {
             <button
                 style={{
                   ...styles.button,
-                  backgroundColor: hoveredButton === "approve" ? "#ADD8E6" : "white", // Light blue on hover
+                  backgroundColor: hoveredButton === "approve" ? "#ADD8E6" : "white",
                   color: hoveredButton === "approve" ? "white" : "black",
               }}
               onMouseEnter={() => setHoveredButton("approve")}
@@ -276,7 +282,7 @@ const MyCalendar = () => {
                               Authorization: `Bearer ${token}`,
                             },
                           });
-                          setCalendarData(response.data); // 🔁 Refresh calendar after deletion
+                          setCalendarData(response.data); // Refresh calendar after deletion
                         } catch (error) {
                           console.error("Error refreshing calendar after deletion", error);
                         }
@@ -316,7 +322,7 @@ const MyCalendar = () => {
                         console.error("Failed to create event:", error);
                       }
                     }}
-                    onClose={() => setShowEventForm(false)} // 👈 add this line
+                    onClose={() => setShowEventForm(false)}
                 />
             )}
 

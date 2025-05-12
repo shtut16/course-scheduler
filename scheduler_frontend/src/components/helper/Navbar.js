@@ -1,4 +1,7 @@
-// src/components/Navbar.js
+// Navbar.js
+// This component renders the main navigation bar for the application.
+// It displays links to the Dashboard, Login, and Sign Up pages depending on the authentication status.
+
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
