@@ -7,6 +7,7 @@ import RecentChanges from './helper/RecentChanges';
 import ExportCalendar from './helper/ExportCalendar';
 import {Tooltip} from "react-tooltip";  // Import ExportCalendar component
 
+const apiUrl = process.env.REACT_APP_API_URL;
 const SharedCalendar = () => {
   const [hoveredButton, setHoveredButton] = useState(null);
   const [calendarData, setCalendarData] = useState(null);
@@ -20,7 +21,7 @@ const SharedCalendar = () => {
   // Fetch shared calendar data
   const fetchSharedEvents = useCallback(async () => {
     try {
-      const response = await axios.get("http://localhost:8000/api/shared-calendar/", {
+      const response = await axios.get(`${apiUrl}/api/shared-calendar/`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setCalendarData(response.data || []);

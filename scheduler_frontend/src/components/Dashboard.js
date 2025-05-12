@@ -5,11 +5,12 @@ import { Link } from "react-router-dom";
 function Dashboard() {
   const [userData, setUserData] = useState(null);
   const accessToken = localStorage.getItem('access_token');
+  const apiUrl = process.env.REACT_APP_API_URL;
 
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/api/dashboard/', {
+        const response = await axios.get(`${apiUrl}/api/dashboard/`, {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },
@@ -22,7 +23,7 @@ function Dashboard() {
     };
 
     fetchDashboardData();
-  }, [accessToken]);
+  }, [apiUrl, accessToken]);
 
   return (
     <div style={{ padding: '40px', fontFamily: 'Arial, sans-serif', backgroundColor: '#f5f5f5', minHeight: '100vh' }}>
@@ -59,7 +60,7 @@ function Dashboard() {
                 </Link>
 
                 {userData.is_staff && (
-                  <a href="http://localhost:8000/admin/" target="_blank" rel="noopener noreferrer">
+                  <a href={`${apiUrl}/admin/`} target="_blank" rel="noopener noreferrer">
                     <button style={{
                       padding: '12px 20px',
                       backgroundColor: '#343a40',

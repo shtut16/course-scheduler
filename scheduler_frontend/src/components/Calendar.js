@@ -6,6 +6,8 @@ import interactionPlugin from '@fullcalendar/interaction'; // Plugin for time gr
 import Modal from 'react-modal'; // To create a modal for event details
 import axios from "./helper/axiosInstance"; // replace the import
 
+const apiUrl = process.env.REACT_APP_API_URL;
+
 const Calendar = ({ events = [], calendarType, onEventDeleted }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState(null); // Store selected event data
@@ -121,7 +123,7 @@ const Calendar = ({ events = [], calendarType, onEventDeleted }) => {
               className="delete-btn"
               onClick={async () => {
                 try {
-                  await axios.delete(`http://localhost:8000/api/events/${selectedEvent.id}/`, {
+                  await axios.delete(`${apiUrl}/api/events/${selectedEvent.id}/`, {
                     headers: {
                       Authorization: `Bearer ${localStorage.getItem("access_token")}`,
                     },

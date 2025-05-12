@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import '../styles/Login.css';  // Reusing the Login CSS
 import { Tooltip } from 'react-tooltip';
 
+const apiUrl = process.env.REACT_APP_API_URL;
 const Signup = () => {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
@@ -16,7 +17,7 @@ const Signup = () => {
         setError('');
 
         try {
-            const response = await axios.post('http://127.0.0.1:8000/api/signup/', {
+            const response = await axios.post(`${apiUrl}/api/signup/`, {
                 username,
                 email,
                 password,

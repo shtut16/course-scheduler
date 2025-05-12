@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios'; // Use the default Axios import
 
+const apiUrl = process.env.REACT_APP_API_URL;
 const RecentChanges = () => {
   const [changes, setChanges] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -17,7 +18,7 @@ const RecentChanges = () => {
       return;
     }
 
-    axios.get('http://localhost:8000/api/recent-changes/', {
+    axios.get(`${apiUrl}/api/recent-changes/`, {
       headers: {
         Authorization: `Bearer ${token}`, // Add token in the Authorization header
       },

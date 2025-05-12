@@ -8,6 +8,7 @@ import EventForm from './helper/EventForm'; // EVENTFORM
 import ExportCalendar from './helper/ExportCalendar';  // Import ExportCalendar component
 import { Tooltip } from 'react-tooltip';
 
+const apiUrl = process.env.REACT_APP_API_URL;
 const MyCalendar = () => {
   const [hoveredButton, setHoveredButton] = useState(null);
   const [calendarData, setCalendarData] = useState(null); // Store user-specific calendar data
@@ -24,7 +25,7 @@ const MyCalendar = () => {
     // Fetch calendar data for the logged-in user (personal calendar)
     const fetchCalendarData = useCallback(async () => {
       try {
-        const response = await axios.get("http://localhost:8000/api/my-calendar/", {
+        const response = await axios.get(`${apiUrl}/api/my-calendar/`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -58,7 +59,7 @@ const MyCalendar = () => {
 
     try {
       // Make a POST request to create a new event in the backend
-      await axios.post("http://localhost:8000/api/events/", newEvent, {
+      await axios.post(`${apiUrl}/api/events/`, newEvent, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -79,7 +80,7 @@ const MyCalendar = () => {
     try {
       // Send a POST request to push calendar data to shared calendar
       const response = await axios.post(
-        "http://localhost:8000/api/push-to-shared/",
+        `${apiUrl}/api/push-to-shared/`,
         { events: calendarData }, // Send all events as one object
         {
           headers: {
@@ -270,7 +271,7 @@ const MyCalendar = () => {
                       calendarType="personal"
                       onEventDeleted={async () => {
                         try {
-                          const response = await axios.get("http://localhost:8000/api/my-calendar/", {
+                          const response = await axios.get(`${apiUrl}/api/my-calendar/`, {
                             headers: {
                               Authorization: `Bearer ${token}`,
                             },
@@ -304,7 +305,7 @@ const MyCalendar = () => {
                 <EventForm
                     onCreateEvent={async (newEventData) => {
                       try {
-                        await axios.post("http://localhost:8000/api/events/", newEventData, {
+                        await axios.post(`${apiUrl}/api/events/`, newEventData, {
                           headers: {
                             Authorization: `Bearer ${localStorage.getItem("access_token")}`,
                           },
